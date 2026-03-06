@@ -41,4 +41,10 @@
 ## 在线阅读（GitHub Pages）
 
 - 站点入口：`docs/index.html`
-- 启用后访问：`https://fengye404.github.io/llm-training-learning/`
+- 当前访问地址：`https://fengye404.top/llm-training-learning/`
+- GitHub 默认地址：`https://fengye404.github.io/llm-training-learning/`
+
+## Notebook 版本
+
+- 目录：`notebooks/`
+- 索引：`notebooks/README.md`

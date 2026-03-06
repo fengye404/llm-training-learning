@@ -53,3 +53,11 @@ python3 projects/project-02-preference-alignment/grpo_train.py
 python3 projects/project-03-rlhf-pipeline/rlhf_pipeline_demo.py
 python3 projects/project-04-capstone/build_learning_report.py
 ```
+
+## Notebook 入口
+
+- `notebooks/ch01_foundation.ipynb`
+- `notebooks/ch02_sft.ipynb`
+- `notebooks/ch03_preference_alignment.ipynb`
+- `notebooks/ch04_rlhf_pipeline.ipynb`
+- `notebooks/ch05_capstone_report.ipynb`
