@@ -39,3 +39,8 @@ python3 projects/project-01-sft/train.py
 - `tokenize` + `featurize`：文本如何变成数字。
 - `softmax`：如何把打分变成概率。
 - `weights[c][i] -= ...`：参数如何更新。
+
+## 讲义模式（零基础推荐）
+
+- `projects/project-01-sft/GUIDE_STEP_BY_STEP.md`
+- 按“10 行一讲”阅读：白话解释 + 动手练习

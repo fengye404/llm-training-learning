@@ -28,3 +28,8 @@ python3 projects/project-04-capstone/build_learning_report.py
 - `Experiment`：可类比 DTO。
 - `to_markdown(...)`：可类比报告组装服务。
 - 写文件：可类比导出报表任务。
+
+## 讲义模式（零基础推荐）
+
+- `projects/project-04-capstone/GUIDE_STEP_BY_STEP.md`
+- 按“10 行一讲”阅读：白话解释 + 动手练习

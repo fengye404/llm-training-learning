@@ -38,3 +38,9 @@ python3 projects/project-02-preference-alignment/grpo_train.py
 - `scores: dict[str, float]`：约等于 `Map<String, Double>`。
 - `margin`：可类比排序系统里的分差。
 - `advantage`：可类比 `(当前分 - 组均分)`。
+
+## 讲义模式（零基础推荐）
+
+- DPO：`projects/project-02-preference-alignment/GUIDE_STEP_BY_STEP_DPO.md`
+- GRPO：`projects/project-02-preference-alignment/GUIDE_STEP_BY_STEP_GRPO.md`
+- 按“10 行一讲”阅读：白话解释 + 动手练习

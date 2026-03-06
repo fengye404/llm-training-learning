@@ -29,3 +29,8 @@ python3 projects/project-03-rlhf-pipeline/rlhf_pipeline_demo.py
 - `reward_model(...)`：可类比评分服务。
 - `logits`：可类比每个问题下候选策略的可变状态。
 - epoch 循环：可类比离线作业反复迭代。
+
+## 讲义模式（零基础推荐）
+
+- `projects/project-03-rlhf-pipeline/GUIDE_STEP_BY_STEP.md`
+- 按“10 行一讲”阅读：白话解释 + 动手练习
