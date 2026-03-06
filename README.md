@@ -37,3 +37,8 @@
 ## 外部优质内容融合版
 
 - `resources/learning-methods-and-links.md`：优质课程教学思想 + 对应本仓库 + 推荐链接
+
+## 在线阅读（GitHub Pages）
+
+- 站点入口：`docs/index.html`
+- 启用后访问：`https://fengye404.github.io/llm-training-learning/`

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LLM 训练学习路径（Java 后端零基础版）</title>
+  <link rel="stylesheet" href="./style.css" />
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true, theme: 'default' });
+  </script>
+</head>
+<body>
+  <header class="hero">
+    <div class="container">
+      <p class="kicker">GitHub Pages</p>
+      <h1>LLM 训练学习路径</h1>
+      <p class="subtitle">面向 Java 后端、AI/Python 零基础。按章节循序渐进，先跑通再理解。</p>
+      <div class="actions">
+        <a class="btn primary" href="https://github.com/fengye404/llm-training-learning" target="_blank" rel="noreferrer">查看仓库</a>
+        <a class="btn" href="#chapters">开始学习</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="panel">
+      <h2>学习总览</h2>
+      <div class="mermaid">
+flowchart LR
+  A[第0步: 零基础入门] --> B[第1章: 训练最小闭环]
+  B --> C[第2章: SFT 监督微调]
+  C --> D[第3章: DPO/GRPO 偏好对齐]
+  D --> E[第4章: RLHF 流水线]
+  E --> F[第5章: 自动生成学习报告]
+      </div>
+      <p class="hint">建议顺序：先看第 0 步，再从第 1 章跑到第 5 章，不要跳章。</p>
+    </section>
+
+    <section id="chapters" class="panel">
+      <h2>章节入口（讲义 + 代码）</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>第 0 步：零基础入门</h3>
+          <p>先建立直觉：训练是什么、为什么 loss 会下降、怎么按顺序学。</p>
+          <a href="https://github.com/fengye404/llm-training-learning/blob/main/notes/00-%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8.md" target="_blank" rel="noreferrer">打开入门文档</a>
+        </article>
+
+        <article class="card">
+          <h3>第 1 章：训练基础</h3>
+          <p>看懂“预测 -> 误差 -> 梯度 -> 更新”闭环。</p>
+          <a href="https://github.com/fengye404/llm-training-learning/blob/main/projects/project-00-foundation/GUIDE_STEP_BY_STEP.md" target="_blank" rel="noreferrer">打开 10 行讲义</a>
+        </article>
+
+        <article class="card">
+          <h3>第 2 章：SFT</h3>
+          <p>看懂文本如何变成向量，如何通过监督学习得到映射。</p>
+          <a href="https://github.com/fengye404/llm-training-learning/blob/main/projects/project-01-sft/GUIDE_STEP_BY_STEP.md" target="_blank" rel="noreferrer">打开 10 行讲义</a>
+        </article>
+
+        <article class="card">
+          <h3>第 3 章：偏好对齐</h3>
+          <p>DPO 与 GRPO 各有一份讲义，先 DPO 再 GRPO。</p>
+          <a href="https://github.com/fengye404/llm-training-learning/blob/main/projects/project-02-preference-alignment/GUIDE_STEP_BY_STEP_DPO.md" target="_blank" rel="noreferrer">打开 DPO 讲义</a>
+          <a href="https://github.com/fengye404/llm-training-learning/blob/main/projects/project-02-preference-alignment/GUIDE_STEP_BY_STEP_GRPO.md" target="_blank" rel="noreferrer">打开 GRPO 讲义</a>
+        </article>
+
+        <article class="card">
+          <h3>第 4 章：RLHF 流水线</h3>
+          <p>看懂“生成 -> 打分 -> 更新”的工程闭环。</p>
+          <a href="https://github.com/fengye404/llm-training-learning/blob/main/projects/project-03-rlhf-pipeline/GUIDE_STEP_BY_STEP.md" target="_blank" rel="noreferrer">打开 10 行讲义</a>
+        </article>
+
+        <article class="card">
+          <h3>第 5 章：成果沉淀</h3>
+          <p>自动生成学习报告，把训练过程变成可复盘资产。</p>
+          <a href="https://github.com/fengye404/llm-training-learning/blob/main/projects/project-04-capstone/GUIDE_STEP_BY_STEP.md" target="_blank" rel="noreferrer">打开 10 行讲义</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>一键运行命令</h2>
+      <pre><code>python3 projects/project-00-foundation/toy_autograd_train.py
+python3 projects/project-01-sft/train.py
+python3 projects/project-02-preference-alignment/dpo_train.py
+python3 projects/project-02-preference-alignment/grpo_train.py
+python3 projects/project-03-rlhf-pipeline/rlhf_pipeline_demo.py
+python3 projects/project-04-capstone/build_learning_report.py</code></pre>
+    </section>
+
+    <section class="panel">
+      <h2>外部优质课程融合</h2>
+      <p>你可以继续看这份整合文档（教学思想 + 推荐链接）：</p>
+      <a href="https://github.com/fengye404/llm-training-learning/blob/main/resources/learning-methods-and-links.md" target="_blank" rel="noreferrer">打开融合文档</a>
+    </section>
+  </main>
+
+  <footer class="container footer">
+    <p>维护仓库：<a href="https://github.com/fengye404/llm-training-learning" target="_blank" rel="noreferrer">fengye404/llm-training-learning</a></p>
+  </footer>
+</body>
+</html>
