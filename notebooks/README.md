@@ -18,3 +18,13 @@ jupyter notebook
 ```
 
 然后在浏览器中打开对应 `.ipynb`。
+
+## 一键启动
+
+```bash
+./scripts/start-notebook.sh
+```
+
+macOS 双击方式：
+
+- 双击仓库根目录的 `start-notebook.command`

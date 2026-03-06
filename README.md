@@ -48,3 +48,8 @@
 
 - 目录：`notebooks/`
 - 索引：`notebooks/README.md`
+
+## Notebook 一键启动
+
+- 命令行：`./scripts/start-notebook.sh`
+- macOS 双击：`start-notebook.command`
