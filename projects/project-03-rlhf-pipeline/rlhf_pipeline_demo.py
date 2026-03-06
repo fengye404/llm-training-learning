@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
-"""第 4 章：RLHF 流水线最小示例（超详细注释版）。
+"""第 4 章：RLHF 流水线最小示例（行内超详细解释版）。
 
-把流程想成一个循环：
-1) 策略模型先给多个候选回答
-2) 奖励模型给候选回答打分
-3) 策略模型根据分数调整自己
-
-这份代码是教学简化版，不追求工业级精确实现。
+教学目标：
+- 看懂“生成 -> 打分 -> 更新”三步闭环。
+- 看懂为什么高奖励策略会被强化。
 """
 
 from __future__ import annotations
@@ -15,6 +12,9 @@ import math
 from dataclasses import dataclass
 
 
+# =======================================
+# 第 1 部分：问题结构
+# =======================================
 @dataclass
 class PromptCase:
     """一个问题及其候选回答集合。"""
@@ -23,6 +23,9 @@ class PromptCase:
     candidates: list[str]
 
 
+# =======================================
+# 第 2 部分：教学样本
+# =======================================
 CASES = [
     PromptCase("慢 SQL 怎么处理", ["补索引并分析执行计划", "先把超时调大"]),
     PromptCase("接口稳定性怎么提升", ["补监控并加重试", "故障时直接重启"]),
@@ -30,28 +33,35 @@ CASES = [
 ]
 
 
+# =======================================
+# 第 3 部分：奖励模型（规则版）
+# =======================================
 def reward_model(text: str) -> float:
-    """一个教学版奖励函数。
+    """教学版奖励函数。
 
-    真正 RLHF 里，reward model 往往是训练出来的模型。
-    这里用关键词规则代替，降低理解难度。
+    真实 RLHF 里奖励模型通常是训练得到的神经网络。
+    这里先用关键词规则模拟，便于零基础理解。
     """
 
     good_keywords = ["索引", "监控", "回归", "重试", "执行计划", "复现"]
 
+    # STEP 1) 关键词命中加分
     score = 0.0
     for key in good_keywords:
         if key in text:
             score += 0.5
 
-    # 稍微偏好信息量更充分的回答（长度上限截断）
+    # STEP 2) 稍微偏好信息量更多的回答（长度截断）
     score += min(len(text), 30) / 60.0
 
     return score
 
 
+# =======================================
+# 第 4 部分：softmax
+# =======================================
 def softmax(logits: list[float]) -> list[float]:
-    """把 logits 变成候选概率分布。"""
+    """把 logits 转成概率分布。"""
 
     m = max(logits)
     exps = [math.exp(x - m) for x in logits]
@@ -59,31 +69,37 @@ def softmax(logits: list[float]) -> list[float]:
     return [x / s for x in exps]
 
 
+# =======================================
+# 第 5 部分：主训练流程
+# =======================================
 def main() -> None:
     lr = 0.25
     epochs = 40
 
-    # 每个问题下每个候选回答都有一个可学习 logit
+    # 每个问题下，每个候选都有一个可学习 logit
     logits = {
         case.prompt: [0.0 for _ in case.candidates]
         for case in CASES
     }
 
+    # epoch 循环
     for epoch in range(1, epochs + 1):
         epoch_reward = 0.0
 
+        # 遍历每个问题
         for case in CASES:
-            # 第一步：对当前候选打奖励分
+            # STEP 1) 候选回答打分
             scores = [reward_model(candidate) for candidate in case.candidates]
 
-            # 第二步：根据当前 logits 得到策略概率
+            # STEP 2) 根据当前 logits 计算策略概率
             probs = softmax(logits[case.prompt])
 
-            # 计算当前策略的期望奖励
+            # STEP 3) 计算当前策略的期望奖励
             expected_reward = sum(p * r for p, r in zip(probs, scores))
             epoch_reward += expected_reward
 
-            # 第三步：根据“高于基线/低于基线”更新 logits
+            # STEP 4) 根据 advantage 更新参数
+            # advantage = 当前候选分数 - 当前策略基线
             for i in range(len(case.candidates)):
                 baseline = expected_reward
                 advantage = scores[i] - baseline
@@ -93,6 +109,7 @@ def main() -> None:
             avg_reward = epoch_reward / len(CASES)
             print(f"epoch={epoch:03d} 平均期望奖励={avg_reward:.4f}")
 
+    # 训练完成，打印每个问题最终最优策略
     print("\n每个问题的最终优选策略:")
     for case in CASES:
         probs = softmax(logits[case.prompt])
