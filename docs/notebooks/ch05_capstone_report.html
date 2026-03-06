@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>第 5 章 Notebook：自动生成学习报告</title>
+  <style>
+:root {
+  --bg: #f6f8fb;
+  --text: #17202a;
+  --muted: #5c6874;
+  --panel: #ffffff;
+  --border: #dfe5ee;
+  --code-bg: #101418;
+  --code-fg: #f2f5f9;
+  --accent: #0b6a4f;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+}
+.container {
+  width: min(980px, 92vw);
+  margin: 0 auto;
+  padding: 24px 0 40px;
+}
+.topbar {
+  margin-bottom: 14px;
+}
+.topbar a {
+  color: var(--accent);
+  text-decoration: none;
+}
+h1 {
+  margin: 0 0 6px;
+  font-size: 30px;
+}
+.sub {
+  margin: 0 0 18px;
+  color: var(--muted);
+}
+.cell {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+.badge {
+  display: inline-block;
+  font-size: 12px;
+  color: var(--accent);
+  border: 1px solid #b7d7cc;
+  border-radius: 999px;
+  padding: 2px 8px;
+  margin-bottom: 8px;
+}
+pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.code {
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 10px;
+  overflow: auto;
+}
+.markdown {
+  background: #ffffff;
+}
+.note {
+  margin-top: 20px;
+  color: var(--muted);
+  font-size: 14px;
+}
+</style>
+</head>
+<body>
+  <main class="container">
+    <div class="topbar"><a href="../index.html#notebooks">← 返回 Pages 首页（Notebook 区域）</a></div>
+    <h1>第 5 章 Notebook：自动生成学习报告</h1>
+    <p class="sub">文件：ch05_capstone_report.ipynb（静态导出版）</p>
+    <section class="cell markdown"><div class="badge">Markdown</div><pre># 第 5 章 Notebook：自动生成学习报告
+
+目标：把前面章节结果沉淀成可复盘报告。</pre></section><section class="cell"><div class="badge">Code</div><pre class="code">import subprocess, sys
+subprocess.run([sys.executable, &#x27;projects/project-04-capstone/build_learning_report.py&#x27;], check=True)</pre></section><section class="cell"><div class="badge">Code</div><pre class="code">from pathlib import Path
+print(Path(&#x27;projects/project-04-capstone/learning_report.md&#x27;).read_text(encoding=&#x27;utf-8&#x27;))</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 下一步
+把 `EXPERIMENTS` 替换为你真实训练数据，再重新生成报告。</pre></section>
+    <p class="note">说明：这是为了 GitHub Pages 展示生成的静态版本。原始可交互版本请在仓库 notebooks/ 目录中打开 .ipynb。</p>
+  </main>
+</body>
+</html>

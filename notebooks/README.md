@@ -10,6 +10,14 @@
 4. `notebooks/ch04_rlhf_pipeline.ipynb`
 5. `notebooks/ch05_capstone_report.ipynb`
 
+## Pages 直接查看（静态导出）
+
+- `docs/notebooks/ch01_foundation.html`
+- `docs/notebooks/ch02_sft.html`
+- `docs/notebooks/ch03_preference_alignment.html`
+- `docs/notebooks/ch04_rlhf_pipeline.html`
+- `docs/notebooks/ch05_capstone_report.html`
+
 ## 本地运行方式
 
 ```bash

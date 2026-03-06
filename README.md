@@ -48,6 +48,7 @@
 
 - 目录：`notebooks/`
 - 索引：`notebooks/README.md`
+- Pages 静态导出：`docs/notebooks/*.html`（可直接在 Pages 查看）
 
 ## Notebook 一键启动
 

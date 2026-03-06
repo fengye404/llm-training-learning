@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>第 3 章 Notebook：偏好对齐（DPO + GRPO）</title>
+  <style>
+:root {
+  --bg: #f6f8fb;
+  --text: #17202a;
+  --muted: #5c6874;
+  --panel: #ffffff;
+  --border: #dfe5ee;
+  --code-bg: #101418;
+  --code-fg: #f2f5f9;
+  --accent: #0b6a4f;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+}
+.container {
+  width: min(980px, 92vw);
+  margin: 0 auto;
+  padding: 24px 0 40px;
+}
+.topbar {
+  margin-bottom: 14px;
+}
+.topbar a {
+  color: var(--accent);
+  text-decoration: none;
+}
+h1 {
+  margin: 0 0 6px;
+  font-size: 30px;
+}
+.sub {
+  margin: 0 0 18px;
+  color: var(--muted);
+}
+.cell {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+.badge {
+  display: inline-block;
+  font-size: 12px;
+  color: var(--accent);
+  border: 1px solid #b7d7cc;
+  border-radius: 999px;
+  padding: 2px 8px;
+  margin-bottom: 8px;
+}
+pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.code {
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 10px;
+  overflow: auto;
+}
+.markdown {
+  background: #ffffff;
+}
+.note {
+  margin-top: 20px;
+  color: var(--muted);
+  font-size: 14px;
+}
+</style>
+</head>
+<body>
+  <main class="container">
+    <div class="topbar"><a href="../index.html#notebooks">← 返回 Pages 首页（Notebook 区域）</a></div>
+    <h1>第 3 章 Notebook：偏好对齐（DPO + GRPO）</h1>
+    <p class="sub">文件：ch03_preference_alignment.ipynb（静态导出版）</p>
+    <section class="cell markdown"><div class="badge">Markdown</div><pre># 第 3 章 Notebook：偏好对齐（DPO + GRPO）
+
+目标：看懂模型如何更偏好好答案。</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## DPO 先看
+- 核心信号：`margin = chosen - rejected` 逐步增大</pre></section><section class="cell"><div class="badge">Code</div><pre class="code">import subprocess, sys
+subprocess.run([sys.executable, &#x27;projects/project-02-preference-alignment/dpo_train.py&#x27;], check=True)</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 再看 GRPO
+- 核心信号：高优势候选概率逐步接近 1</pre></section><section class="cell"><div class="badge">Code</div><pre class="code">import subprocess, sys
+subprocess.run([sys.executable, &#x27;projects/project-02-preference-alignment/grpo_train.py&#x27;], check=True)</pre></section>
+    <p class="note">说明：这是为了 GitHub Pages 展示生成的静态版本。原始可交互版本请在仓库 notebooks/ 目录中打开 .ipynb。</p>
+  </main>
+</body>
+</html>
