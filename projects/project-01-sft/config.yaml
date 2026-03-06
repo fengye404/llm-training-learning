@@ -1,0 +1,3 @@
+# Tiny config for the educational SFT script
+learning_rate: 0.2
+epochs: 120
