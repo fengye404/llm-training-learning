@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Phase 5: build a markdown learning report from experiment snapshots."""
+"""第 5 章：根据实验快照生成学习报告（Markdown）。"""
 
 from __future__ import annotations
 
@@ -17,20 +17,20 @@ class Experiment:
 
 
 EXPERIMENTS = [
-    Experiment("Phase 1", "toy_loss", 4.8, 0.02, "linear model converged"),
-    Experiment("Phase 2", "sft_avg_loss", 1.2, 0.15, "instruction mapping learned"),
-    Experiment("Phase 3", "dpo_margin", 0.0, 2.4, "chosen responses preferred"),
-    Experiment("Phase 4", "expected_reward", 0.55, 1.35, "policy moved to high-reward actions"),
+    Experiment("第 1 章", "toy_loss", 4.8, 0.02, "线性模型完成收敛"),
+    Experiment("第 2 章", "sft_avg_loss", 1.2, 0.15, "指令到输出映射已学到"),
+    Experiment("第 3 章", "dpo_margin", 0.0, 2.4, "模型更偏好 chosen 响应"),
+    Experiment("第 4 章", "expected_reward", 0.55, 1.35, "策略向高奖励动作收敛"),
 ]
 
 
 def to_markdown(experiments: list[Experiment]) -> str:
     lines = []
-    lines.append("# Learning Report")
+    lines.append("# 学习报告")
     lines.append("")
-    lines.append(f"Generated on: {date.today().isoformat()}")
+    lines.append(f"生成日期: {date.today().isoformat()}")
     lines.append("")
-    lines.append("| Phase | Metric | Before | After | Delta | Note |")
+    lines.append("| 章节 | 指标 | 变更前 | 变更后 | 差值 | 备注 |")
     lines.append("|---|---:|---:|---:|---:|---|")
 
     for e in experiments:
@@ -40,10 +40,10 @@ def to_markdown(experiments: list[Experiment]) -> str:
         )
 
     lines.append("")
-    lines.append("## Next actions")
-    lines.append("1. Replace mock numbers with real logs from your scripts.")
-    lines.append("2. Add one failed experiment and root-cause analysis.")
-    lines.append("3. Keep one benchmark prompt set for regression check.")
+    lines.append("## 下一步行动")
+    lines.append("1. 把示例中的模拟数据替换成真实训练日志。")
+    lines.append("2. 增加一条失败实验并补充根因分析。")
+    lines.append("3. 固化一组 benchmark 提示词用于回归检查。")
     return "\n".join(lines)
 
 
@@ -52,7 +52,7 @@ def main() -> None:
     out = "projects/project-04-capstone/learning_report.md"
     with open(out, "w", encoding="utf-8") as f:
         f.write(md)
-    print(f"report written: {out}")
+    print(f"报告已写入: {out}")
 
 
 if __name__ == "__main__":

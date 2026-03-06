@@ -1,15 +1,15 @@
-# Learning Report
+# 学习报告
 
-Generated on: 2026-03-07
+生成日期: 2026-03-07
 
-| Phase | Metric | Before | After | Delta | Note |
+| 章节 | 指标 | 变更前 | 变更后 | 差值 | 备注 |
 |---|---:|---:|---:|---:|---|
-| Phase 1 | toy_loss | 4.800 | 0.020 | -4.780 | linear model converged |
-| Phase 2 | sft_avg_loss | 1.200 | 0.150 | -1.050 | instruction mapping learned |
-| Phase 3 | dpo_margin | 0.000 | 2.400 | +2.400 | chosen responses preferred |
-| Phase 4 | expected_reward | 0.550 | 1.350 | +0.800 | policy moved to high-reward actions |
+| 第 1 章 | toy_loss | 4.800 | 0.020 | -4.780 | 线性模型完成收敛 |
+| 第 2 章 | sft_avg_loss | 1.200 | 0.150 | -1.050 | 指令到输出映射已学到 |
+| 第 3 章 | dpo_margin | 0.000 | 2.400 | +2.400 | 模型更偏好 chosen 响应 |
+| 第 4 章 | expected_reward | 0.550 | 1.350 | +0.800 | 策略向高奖励动作收敛 |
 
-## Next actions
-1. Replace mock numbers with real logs from your scripts.
-2. Add one failed experiment and root-cause analysis.
-3. Keep one benchmark prompt set for regression check.
+## 下一步行动
+1. 把示例中的模拟数据替换成真实训练日志。
+2. 增加一条失败实验并补充根因分析。
+3. 固化一组 benchmark 提示词用于回归检查。

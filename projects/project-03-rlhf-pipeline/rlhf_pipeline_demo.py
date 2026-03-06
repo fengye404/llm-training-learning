@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Phase 4: minimal RLHF pipeline demo.
+"""第 4 章：RLHF 流水线最小示例。
 
-Pipeline:
-1) policy generate candidates
-2) reward model score candidates
-3) policy update toward higher reward
+流程：
+1) 策略生成候选
+2) 奖励模型打分
+3) 策略向高奖励方向更新
 """
 
 from __future__ import annotations
@@ -65,13 +65,13 @@ def main() -> None:
 
         if epoch == 1 or epoch % 10 == 0 or epoch == epochs:
             avg_reward = epoch_reward / len(CASES)
-            print(f"epoch={epoch:03d} avg_expected_reward={avg_reward:.4f}")
+            print(f"epoch={epoch:03d} 平均期望奖励={avg_reward:.4f}")
 
-    print("\nFinal selected strategy per prompt:")
+    print("\n每个问题的最终优选策略:")
     for case in CASES:
         probs = softmax(logits[case.prompt])
         best_idx = max(range(len(probs)), key=lambda i: probs[i])
-        print(f"prompt={case.prompt}\n  best={case.candidates[best_idx]}\n  prob={probs[best_idx]:.3f}")
+        print(f"prompt={case.prompt}\n  最优={case.candidates[best_idx]}\n  概率={probs[best_idx]:.3f}")
 
 
 if __name__ == "__main__":

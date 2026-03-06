@@ -1,10 +1,10 @@
-# LLM Training Learning Workspace
+# LLM 训练学习工作区
 
 这个目录用于系统学习大模型训练全景，覆盖：
 - 预训练与后训练的整体认知
-- SFT（Supervised Fine-Tuning）
+- SFT（监督微调）
 - 偏好学习（DPO / GRPO）
-- RLHF 工程化（Reward Model + Policy Optimization + 评测）
+- RLHF 工程化（奖励模型 + 策略优化 + 评测）
 
 ## 目录结构
 
@@ -13,11 +13,11 @@
 - `resources/official-links.md`：官方资料索引
 - `notes/`：你的学习笔记
 - `projects/README.md`：每章示例代码索引与运行方式
-- `projects/project-00-foundation/`：Phase 1 训练基础代码
-- `projects/project-01-sft/`：SFT 实战项目
-- `projects/project-02-preference-alignment/`：DPO/GRPO 实战项目
-- `projects/project-03-rlhf-pipeline/`：端到端 RLHF 小型流水线项目
-- `projects/project-04-capstone/`：学习成果沉淀与报告生成
+- `projects/project-00-foundation/`：第 1 章训练基础代码
+- `projects/project-01-sft/`：第 2 章 SFT 实战
+- `projects/project-02-preference-alignment/`：第 3 章 DPO/GRPO 实战
+- `projects/project-03-rlhf-pipeline/`：第 4 章 RLHF 小型流水线
+- `projects/project-04-capstone/`：第 5 章成果沉淀与报告生成
 
 ## 建议学习节奏
 

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Phase 3: DPO objective demo without heavy dependencies.
+"""第 3 章：DPO 目标函数最小示例（无重依赖）。
 
-DPO key idea:
-Increase score(chosen) - score(rejected).
+DPO 关键点：
+持续拉大 score(chosen) - score(rejected) 的差值。
 """
 
 from __future__ import annotations
@@ -34,7 +34,7 @@ def main() -> None:
     lr = 0.3
     epochs = 80
 
-    # Policy score table, similar to a Java Map<String, Double>.
+    # 策略分数字典，可类比 Java 的 Map<String, Double>
     scores: dict[str, float] = {}
     for s in SAMPLES:
         scores.setdefault(s.chosen, 0.0)
@@ -54,9 +54,9 @@ def main() -> None:
             scores[s.rejected] += lr * g
 
         if epoch == 1 or epoch % 20 == 0 or epoch == epochs:
-            print(f"epoch={epoch:03d} avg_loss={loss_sum / len(SAMPLES):.4f}")
+            print(f"epoch={epoch:03d} 平均loss={loss_sum / len(SAMPLES):.4f}")
 
-    print("\nFinal preference margins (chosen - rejected):")
+    print("\n最终偏好边际 (chosen - rejected):")
     for s in SAMPLES:
         margin = scores[s.chosen] - scores[s.rejected]
         print(f"prompt={s.prompt}\n  margin={margin:.4f}")

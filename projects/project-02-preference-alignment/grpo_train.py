@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Phase 3: GRPO-style group relative advantage demo.
+"""第 3 章：GRPO 风格组内相对优势示例。
 
-This is an educational approximation to explain the mechanism.
+这是教学版近似实现，重点是理解机制。
 """
 
 from __future__ import annotations
@@ -34,7 +34,7 @@ def main() -> None:
     lr = 0.4
     epochs = 60
 
-    # Each prompt has logits for its candidate responses.
+    # 每个 prompt 对应一组候选响应的 logits
     logits_by_prompt = {
         g["prompt"]: [0.0 for _ in g["candidates"]] for g in GROUPS
     }
@@ -50,27 +50,27 @@ def main() -> None:
             avg_reward = sum(rewards) / len(rewards)
             advantages = [r - avg_reward for r in rewards]
 
-            # Objective: sum(log pi(a_i|s) * A_i)
+            # 目标函数: sum(log pi(a_i|s) * A_i)
             obj = 0.0
             for p, a in zip(probs, advantages):
                 obj += math.log(max(p, 1e-9)) * a
             total_obj += obj
 
-            # Gradient for logits in softmax policy gradient style.
+            # softmax 策略梯度的教学版更新
             for i in range(len(logits)):
                 expected_adv = sum(probs[j] * advantages[j] for j in range(len(logits)))
                 grad = advantages[i] - expected_adv
                 logits[i] += lr * grad
 
         if epoch == 1 or epoch % 20 == 0 or epoch == epochs:
-            print(f"epoch={epoch:03d} objective={total_obj:.4f}")
+            print(f"epoch={epoch:03d} 目标值={total_obj:.4f}")
 
-    print("\nFinal candidate probabilities:")
+    print("\n最终候选响应概率:")
     for g in GROUPS:
         probs = softmax(logits_by_prompt[g["prompt"]])
         print(f"prompt={g['prompt']}")
         for c, p in zip(g["candidates"], probs):
-            print(f"  {c:30s} prob={p:.3f}")
+            print(f"  {c:30s} 概率={p:.3f}")
 
 
 if __name__ == "__main__":

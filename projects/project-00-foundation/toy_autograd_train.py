@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Phase 1: tiny training loop for a linear model.
+"""第 1 章：线性模型最小训练循环。
 
-Java mapping:
-- variables w/b ~= fields in a POJO
-- for epoch loop ~= scheduled batch job iterations
-- gradient descent step ~= manual state update
+Java 对照：
+- w / b 相当于类里的字段
+- epoch 循环相当于批处理任务的多轮迭代
+- 梯度下降更新相当于手动状态更新
 """
 
 from __future__ import annotations
@@ -65,7 +65,7 @@ def main() -> None:
 
     test_x = 3.0
     test_pred = model.predict(test_x)
-    print(f"test: x={test_x}, pred={test_pred:.4f}, expected~=7.0")
+    print(f"测试: x={test_x}, 预测值={test_pred:.4f}, 期望值约为7.0")
 
 
 if __name__ == "__main__":

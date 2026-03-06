@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Phase 2: tiny SFT-style classifier (instruction -> response template).
+"""第 2 章：SFT 风格最小分类示例（instruction -> response 模板）。
 
-No external library needed; this is a conceptual bridge before using TRL.
+不依赖外部深度学习库，先帮助你建立概念，再迁移到 TRL。
 """
 
 from __future__ import annotations
@@ -88,7 +88,7 @@ def train(lr: float, epochs: int) -> tuple[list[list[float]], dict[str, int]]:
     vocab = build_vocab(DATASET)
     num_classes = len(RESPONSES)
 
-    # weights[class][token]
+    # 权重矩阵：weights[类别][词项]
     weights = [[0.0 for _ in range(len(vocab))] for _ in range(num_classes)]
 
     for epoch in range(1, epochs + 1):
@@ -107,7 +107,7 @@ def train(lr: float, epochs: int) -> tuple[list[list[float]], dict[str, int]]:
 
         if epoch == 1 or epoch % 30 == 0 or epoch == epochs:
             avg_loss = total_loss / len(DATASET)
-            print(f"epoch={epoch:03d} avg_loss={avg_loss:.4f}")
+            print(f"epoch={epoch:03d} 平均loss={avg_loss:.4f}")
 
     return weights, vocab
 
@@ -132,10 +132,10 @@ def main() -> None:
         "Need method to debug issue quickly",
     ]
 
-    print("\nPredictions:")
+    print("\n预测结果:")
     for t in tests:
         idx, p = predict(t, weights, vocab)
-        print(f"input={t}\n  -> class={idx}, conf={p:.3f}\n  -> response={RESPONSES[idx]}")
+        print(f"输入={t}\n  -> 类别={idx}, 置信度={p:.3f}\n  -> 响应={RESPONSES[idx]}")
 
 
 if __name__ == "__main__":

@@ -1,3 +1,3 @@
-# Tiny config for the educational SFT script
+# 第 2 章 SFT 最小示例配置
 learning_rate: 0.2
 epochs: 120
