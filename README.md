@@ -29,3 +29,7 @@
 
 - `notes/python-for-java-backend.md`：Python 与 Java 对照速查
 - `projects/README.md`：每章示例代码索引与一键运行命令
+
+## 零基础优先入口
+
+- `notes/00-零基础入门.md`：先建立直觉，再看代码
