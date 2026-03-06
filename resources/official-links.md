@@ -1,5 +1,8 @@
 # 官方资料索引（优先看）
 
+补充：
+- `resources/learning-methods-and-links.md`：优质课程教学思想与学习顺序融合版（含课程链接）
+
 ## 主文档
 
 - Hugging Face TRL 文档（总览）

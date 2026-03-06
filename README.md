@@ -33,3 +33,7 @@
 ## 零基础优先入口
 
 - `notes/00-零基础入门.md`：先建立直觉，再看代码
+
+## 外部优质内容融合版
+
+- `resources/learning-methods-and-links.md`：优质课程教学思想 + 对应本仓库 + 推荐链接
