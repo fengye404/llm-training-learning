@@ -14,6 +14,7 @@ flowchart TD
 ## 第 1 章：训练基础
 
 - 代码：`projects/project-00-foundation/toy_autograd_train.py`
+- 讲义：`projects/project-00-foundation/GUIDE_STEP_BY_STEP.md`
 - 目标：看懂 loss 为什么会下降
 
 ## 第 2 章：SFT（监督微调）

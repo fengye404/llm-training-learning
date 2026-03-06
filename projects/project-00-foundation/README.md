@@ -39,3 +39,8 @@ python3 projects/project-00-foundation/toy_autograd_train.py
 - `for epoch in range(...)`：训练总循环。
 - `err = pred - y`：误差。
 - `model.w -= lr * grad_w`：参数更新核心。
+
+## 讲义模式（零基础推荐）
+
+- `projects/project-00-foundation/GUIDE_STEP_BY_STEP.md`
+- 按每 10 行代码阅读：白话解释 + 动手练习
