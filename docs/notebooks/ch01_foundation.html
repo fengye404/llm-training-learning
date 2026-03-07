@@ -91,8 +91,20 @@ pre {
 目标：看懂 &quot;预测 -&gt; 误差 -&gt; 梯度 -&gt; 更新&quot; 这 4 步。</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 你将看到什么
 - `loss` 逐步下降
 - `w` 逐步接近 2，`b` 逐步接近 1
-- `x=3` 的预测值接近 7</pre></section><section class="cell"><div class="badge">Code</div><pre class="code">import subprocess, sys
-subprocess.run([sys.executable, &#x27;projects/project-00-foundation/toy_autograd_train.py&#x27;], check=True)</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 对照讲义
+- `x=3` 的预测值接近 7</pre></section><section class="cell"><div class="badge">Code</div><pre class="code">from pathlib import Path
+import subprocess, sys
+
+ROOT = Path.cwd()
+if not (ROOT / &#x27;projects&#x27;).exists():
+    if (ROOT.parent / &#x27;projects&#x27;).exists():
+        ROOT = ROOT.parent
+    else:
+        raise RuntimeError(f&#x27;未找到项目根目录（应包含 projects/ 目录），当前目录: {Path.cwd()}&#x27;)
+
+print(&#x27;使用项目目录:&#x27;, ROOT)
+subprocess.run([sys.executable, &#x27;projects/project-00-foundation/toy_autograd_train.py&#x27;], check=True, cwd=ROOT)
+</pre><div style="margin-top:8px;"><div class="badge">Output</div><pre class="code">/opt/anaconda3/bin/python: can&#x27;t open file &#x27;/Users/fengye/workspace/llm-training-learning/notebooks/projects/project-00-foundation/toy_autograd_train.py&#x27;: [Errno 2] No such file or directory
+</pre></div></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 对照讲义
 - 10 行讲义：`projects/project-00-foundation/GUIDE_STEP_BY_STEP.md`</pre></section>
     <p class="note">说明：这是为了 GitHub Pages 展示生成的静态版本。原始可交互版本请在仓库 notebooks/ 目录中打开 .ipynb。</p>
   </main>

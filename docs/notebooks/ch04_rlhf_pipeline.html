@@ -90,8 +90,19 @@ pre {
 
 目标：看懂生成 -&gt; 打分 -&gt; 更新的闭环。</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 你将看到什么
 - 平均期望奖励逐步上升
-- 每个问题最终偏向高奖励策略</pre></section><section class="cell"><div class="badge">Code</div><pre class="code">import subprocess, sys
-subprocess.run([sys.executable, &#x27;projects/project-03-rlhf-pipeline/rlhf_pipeline_demo.py&#x27;], check=True)</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 对照讲义
+- 每个问题最终偏向高奖励策略</pre></section><section class="cell"><div class="badge">Code</div><pre class="code">from pathlib import Path
+import subprocess, sys
+
+ROOT = Path.cwd()
+if not (ROOT / &#x27;projects&#x27;).exists():
+    if (ROOT.parent / &#x27;projects&#x27;).exists():
+        ROOT = ROOT.parent
+    else:
+        raise RuntimeError(f&#x27;未找到项目根目录（应包含 projects/ 目录），当前目录: {Path.cwd()}&#x27;)
+
+print(&#x27;使用项目目录:&#x27;, ROOT)
+subprocess.run([sys.executable, &#x27;projects/project-03-rlhf-pipeline/rlhf_pipeline_demo.py&#x27;], check=True, cwd=ROOT)
+</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 对照讲义
 - `projects/project-03-rlhf-pipeline/GUIDE_STEP_BY_STEP.md`</pre></section>
     <p class="note">说明：这是为了 GitHub Pages 展示生成的静态版本。原始可交互版本请在仓库 notebooks/ 目录中打开 .ipynb。</p>
   </main>
