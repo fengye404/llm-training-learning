@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>第 5 章 Notebook：自动生成学习报告</title>
+  <title>第5章课堂版：自动生成学习报告</title>
   <style>
 :root {
   --bg: #f6f8fb;
@@ -84,12 +84,23 @@ pre {
 <body>
   <main class="container">
     <div class="topbar"><a href="../index.html#notebooks">← 返回 Pages 首页（Notebook 区域）</a></div>
-    <h1>第 5 章 Notebook：自动生成学习报告</h1>
+    <h1>第5章课堂版：自动生成学习报告</h1>
     <p class="sub">文件：ch05_capstone_report.ipynb（静态导出版）</p>
-    <section class="cell markdown"><div class="badge">Markdown</div><pre># 第 5 章 Notebook：自动生成学习报告
+    <section class="cell markdown"><div class="badge">Markdown</div><pre># 第5章课堂版：自动生成学习报告
 
-目标：把前面章节结果沉淀成可复盘报告。</pre></section><section class="cell"><div class="badge">Code</div><pre class="code">from pathlib import Path
-import subprocess, sys
+这章回答：**训练结果如何沉淀成可复盘资产**。
+
+你将看到：
+- 如何把实验记录结构化
+- 如何自动生成 Markdown 报告
+- 如何固定每周复盘节奏
+</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 学习目标
+
+- 能看懂 `Experiment` 数据结构。
+- 能把模拟数据替换成真实实验指标。
+- 能稳定产出周报文件。
+</pre></section><section class="cell"><div class="badge">Code</div><pre class="code">from pathlib import Path
+import subprocess, sys, re
 
 ROOT = Path.cwd()
 if not (ROOT / &#x27;projects&#x27;).exists():
@@ -99,17 +110,35 @@ if not (ROOT / &#x27;projects&#x27;).exists():
         raise RuntimeError(f&#x27;未找到项目根目录（应包含 projects/ 目录），当前目录: {Path.cwd()}&#x27;)
 
 print(&#x27;使用项目目录:&#x27;, ROOT)
-subprocess.run([sys.executable, &#x27;projects/project-04-capstone/build_learning_report.py&#x27;], check=True, cwd=ROOT)
-</pre></section><section class="cell"><div class="badge">Code</div><pre class="code">from pathlib import Path
 
-ROOT = Path.cwd()
-if not (ROOT / &#x27;projects&#x27;).exists() and (ROOT.parent / &#x27;projects&#x27;).exists():
-    ROOT = ROOT.parent
+def run_py(rel_path: str) -&gt; str:
+    # 执行项目脚本并返回标准输出文本
+    result = subprocess.run(
+        [sys.executable, str(ROOT / rel_path)],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    print(result.stdout)
+    return result.stdout
+</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 第一步：生成报告
+</pre></section><section class="cell"><div class="badge">Code</div><pre class="code">out = run_py(&#x27;projects/project-04-capstone/build_learning_report.py&#x27;)
+print(&#x27;执行提示:&#x27;, out.strip())
+</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 第二步：读取报告内容
+</pre></section><section class="cell"><div class="badge">Code</div><pre class="code">report_path = ROOT / &#x27;projects/project-04-capstone/learning_report.md&#x27;
+report_text = report_path.read_text(encoding=&#x27;utf-8&#x27;)
+print(report_text)
+</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 第三步：自动检查报告是否完整
+</pre></section><section class="cell"><div class="badge">Code</div><pre class="code">required_keywords = [&#x27;学习报告&#x27;, &#x27;章节&#x27;, &#x27;下一步行动&#x27;]
+for key in required_keywords:
+    print(f&#x27;{key}:&#x27;, &#x27;OK&#x27; if key in report_text else &#x27;缺失&#x27;)
+</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 你接下来该做什么
 
-report_path = ROOT / &#x27;projects/project-04-capstone/learning_report.md&#x27;
-print(report_path.read_text(encoding=&#x27;utf-8&#x27;))
-</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 下一步
-把 `EXPERIMENTS` 替换为你真实训练数据，再重新生成报告。</pre></section>
+1. 打开 `projects/project-04-capstone/build_learning_report.py`。
+2. 把 `EXPERIMENTS` 替换成你真实跑出来的数据。
+3. 每周固定运行一次，形成持续复盘。
+</pre></section>
     <p class="note">说明：这是为了 GitHub Pages 展示生成的静态版本。原始可交互版本请在仓库 notebooks/ 目录中打开 .ipynb。</p>
   </main>
 </body>

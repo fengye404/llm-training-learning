@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>第 4 章 Notebook：RLHF 流水线</title>
+  <title>第4章课堂版：RLHF 流水线</title>
   <style>
 :root {
   --bg: #f6f8fb;
@@ -84,14 +84,23 @@ pre {
 <body>
   <main class="container">
     <div class="topbar"><a href="../index.html#notebooks">← 返回 Pages 首页（Notebook 区域）</a></div>
-    <h1>第 4 章 Notebook：RLHF 流水线</h1>
+    <h1>第4章课堂版：RLHF 流水线</h1>
     <p class="sub">文件：ch04_rlhf_pipeline.ipynb（静态导出版）</p>
-    <section class="cell markdown"><div class="badge">Markdown</div><pre># 第 4 章 Notebook：RLHF 流水线
+    <section class="cell markdown"><div class="badge">Markdown</div><pre># 第4章课堂版：RLHF 流水线
 
-目标：看懂生成 -&gt; 打分 -&gt; 更新的闭环。</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 你将看到什么
-- 平均期望奖励逐步上升
-- 每个问题最终偏向高奖励策略</pre></section><section class="cell"><div class="badge">Code</div><pre class="code">from pathlib import Path
-import subprocess, sys
+这章回答：**生成、打分、更新是怎样串起来的**。
+
+你可以把它类比成：
+- 候选方案生成
+- 评分系统打分
+- 根据分数更新策略
+</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 学习目标
+
+- 理解 `expected_reward` 的意义。
+- 理解 `advantage = score - baseline`。
+- 能解释为什么奖励上升意味着策略更偏向好方案。
+</pre></section><section class="cell"><div class="badge">Code</div><pre class="code">from pathlib import Path
+import subprocess, sys, re
 
 ROOT = Path.cwd()
 if not (ROOT / &#x27;projects&#x27;).exists():
@@ -101,9 +110,40 @@ if not (ROOT / &#x27;projects&#x27;).exists():
         raise RuntimeError(f&#x27;未找到项目根目录（应包含 projects/ 目录），当前目录: {Path.cwd()}&#x27;)
 
 print(&#x27;使用项目目录:&#x27;, ROOT)
-subprocess.run([sys.executable, &#x27;projects/project-03-rlhf-pipeline/rlhf_pipeline_demo.py&#x27;], check=True, cwd=ROOT)
-</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 对照讲义
-- `projects/project-03-rlhf-pipeline/GUIDE_STEP_BY_STEP.md`</pre></section>
+
+def run_py(rel_path: str) -&gt; str:
+    # 执行项目脚本并返回标准输出文本
+    result = subprocess.run(
+        [sys.executable, str(ROOT / rel_path)],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    print(result.stdout)
+    return result.stdout
+</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 运行 RLHF 教学脚本
+</pre></section><section class="cell"><div class="badge">Code</div><pre class="code">out = run_py(&#x27;projects/project-03-rlhf-pipeline/rlhf_pipeline_demo.py&#x27;)
+</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 自动解读关键信号
+</pre></section><section class="cell"><div class="badge">Code</div><pre class="code">reward_values = [float(x) for x in re.findall(r&#x27;平均期望奖励=([0-9.]+)&#x27;, out)]
+print(&#x27;期望奖励序列:&#x27;, reward_values)
+print(&#x27;是否上升:&#x27;, reward_values[-1] &gt; reward_values[0])
+
+best_lines = [line.strip() for line in out.splitlines() if line.strip().startswith(&#x27;最优策略=&#x27;)]
+print(&#x27;\n最终最优策略:&#x27;)
+for line in best_lines:
+    print(line)
+</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 常见误区
+
+- 奖励上升 != 绝对正确，只表示“更符合当前奖励函数”。
+- 奖励函数设计不合理，模型也可能学偏。
+- 所以第5章要做报告和复盘。
+</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 动手练习
+
+1. 在 `reward_model` 的关键词里加入“限流”。
+2. 再跑一次并观察最优策略变化。
+3. 思考：奖励函数改动为什么会改变学习方向？
+</pre></section>
     <p class="note">说明：这是为了 GitHub Pages 展示生成的静态版本。原始可交互版本请在仓库 notebooks/ 目录中打开 .ipynb。</p>
   </main>
 </body>

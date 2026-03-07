@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>第 1 章 Notebook：训练最小闭环</title>
+  <title>第1章课堂版：训练最小闭环（零基础）</title>
   <style>
 :root {
   --bg: #f6f8fb;
@@ -84,15 +84,23 @@ pre {
 <body>
   <main class="container">
     <div class="topbar"><a href="../index.html#notebooks">← 返回 Pages 首页（Notebook 区域）</a></div>
-    <h1>第 1 章 Notebook：训练最小闭环</h1>
+    <h1>第1章课堂版：训练最小闭环（零基础）</h1>
     <p class="sub">文件：ch01_foundation.ipynb（静态导出版）</p>
-    <section class="cell markdown"><div class="badge">Markdown</div><pre># 第 1 章 Notebook：训练最小闭环
+    <section class="cell markdown"><div class="badge">Markdown</div><pre># 第1章课堂版：训练最小闭环（零基础）
 
-目标：看懂 &quot;预测 -&gt; 误差 -&gt; 梯度 -&gt; 更新&quot; 这 4 步。</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 你将看到什么
-- `loss` 逐步下降
-- `w` 逐步接近 2，`b` 逐步接近 1
-- `x=3` 的预测值接近 7</pre></section><section class="cell"><div class="badge">Code</div><pre class="code">from pathlib import Path
-import subprocess, sys
+这章只解决一个问题：**模型为什么会越练越准**。
+
+你不需要先懂 AI 数学，只要盯住 3 个信号：
+1. `loss` 是否下降（错误是否减少）
+2. `w` 是否接近 2、`b` 是否接近 1（参数是否学对）
+3. 测试样例 `x=3` 的预测是否接近 7
+</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 学习目标（本章过关标准）
+
+- 你能用白话解释：训练 = 反复纠错更新参数。
+- 你能解释 `loss` 为什么应该下降。
+- 你能改一个参数（如学习率）并预测变化方向。
+</pre></section><section class="cell"><div class="badge">Code</div><pre class="code">from pathlib import Path
+import subprocess, sys, re
 
 ROOT = Path.cwd()
 if not (ROOT / &#x27;projects&#x27;).exists():
@@ -102,10 +110,51 @@ if not (ROOT / &#x27;projects&#x27;).exists():
         raise RuntimeError(f&#x27;未找到项目根目录（应包含 projects/ 目录），当前目录: {Path.cwd()}&#x27;)
 
 print(&#x27;使用项目目录:&#x27;, ROOT)
-subprocess.run([sys.executable, &#x27;projects/project-00-foundation/toy_autograd_train.py&#x27;], check=True, cwd=ROOT)
-</pre><div style="margin-top:8px;"><div class="badge">Output</div><pre class="code">/opt/anaconda3/bin/python: can&#x27;t open file &#x27;/Users/fengye/workspace/llm-training-learning/notebooks/projects/project-00-foundation/toy_autograd_train.py&#x27;: [Errno 2] No such file or directory
-</pre></div></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 对照讲义
-- 10 行讲义：`projects/project-00-foundation/GUIDE_STEP_BY_STEP.md`</pre></section>
+
+def run_py(rel_path: str) -&gt; str:
+    # 执行项目脚本并返回标准输出文本
+    result = subprocess.run(
+        [sys.executable, str(ROOT / rel_path)],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    print(result.stdout)
+    return result.stdout
+</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 第一步：运行第1章脚本
+
+运行后你会看到多行日志，每行都是某个 epoch 的训练状态。
+</pre></section><section class="cell"><div class="badge">Code</div><pre class="code">out = run_py(&#x27;projects/project-00-foundation/toy_autograd_train.py&#x27;)
+</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 第二步：自动解读输出（避免“看不懂日志”）
+
+下面这个单元会从日志中提取关键字段，帮你判断是否学到了。
+</pre></section><section class="cell"><div class="badge">Code</div><pre class="code">loss_values = [float(x) for x in re.findall(r&#x27;loss=([0-9.]+)&#x27;, out)]
+w_values = [float(x) for x in re.findall(r&#x27;w=([0-9.]+)&#x27;, out)]
+b_values = [float(x) for x in re.findall(r&#x27;b=([0-9.]+)&#x27;, out)]
+
+print(&#x27;loss 记录点数:&#x27;, len(loss_values))
+print(&#x27;首个 loss:&#x27;, loss_values[0])
+print(&#x27;最后 loss:&#x27;, loss_values[-1])
+print(&#x27;loss 是否下降:&#x27;, loss_values[-1] &lt; loss_values[0])
+print(&#x27;最终 w:&#x27;, w_values[-1], &#x27;(目标约 2)&#x27;)
+print(&#x27;最终 b:&#x27;, b_values[-1], &#x27;(目标约 1)&#x27;)
+</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 第三步：你应该如何解释这个结果
+
+- 如果 `loss` 下降：说明模型在减少错误。
+- 如果 `w,b` 接近目标：说明参数在朝正确方向收敛。
+- 如果最终测试值接近预期：说明模型具备基本泛化能力。
+
+&gt; 这就是训练的本质：参数被数据“推着走”。
+</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 动手练习（只改一个变量）
+
+1. 打开 `projects/project-00-foundation/toy_autograd_train.py`
+2. 把学习率 `lr=0.03` 改成 `0.3`
+3. 再运行上面的执行单元
+4. 观察：loss 还稳定下降吗？
+
+你会逐渐形成“超参数直觉”。
+</pre></section>
     <p class="note">说明：这是为了 GitHub Pages 展示生成的静态版本。原始可交互版本请在仓库 notebooks/ 目录中打开 .ipynb。</p>
   </main>
 </body>

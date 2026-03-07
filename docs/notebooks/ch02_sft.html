@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>第 2 章 Notebook：SFT 监督微调（教学版）</title>
+  <title>第2章课堂版：SFT 监督微调（教学版）</title>
   <style>
 :root {
   --bg: #f6f8fb;
@@ -84,15 +84,23 @@ pre {
 <body>
   <main class="container">
     <div class="topbar"><a href="../index.html#notebooks">← 返回 Pages 首页（Notebook 区域）</a></div>
-    <h1>第 2 章 Notebook：SFT 监督微调（教学版）</h1>
+    <h1>第2章课堂版：SFT 监督微调（教学版）</h1>
     <p class="sub">文件：ch02_sft.ipynb（静态导出版）</p>
-    <section class="cell markdown"><div class="badge">Markdown</div><pre># 第 2 章 Notebook：SFT 监督微调（教学版）
+    <section class="cell markdown"><div class="badge">Markdown</div><pre># 第2章课堂版：SFT 监督微调（教学版）
 
-目标：看懂文本如何转成数字特征，并学习到类别映射。</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 你将看到什么
-- `平均loss` 下降
-- 不同输入映射到不同类别
-- 每个类别输出一个建议模板</pre></section><section class="cell"><div class="badge">Code</div><pre class="code">from pathlib import Path
-import subprocess, sys
+这章回答一个问题：**文本是怎么变成模型可学习的数字信息的**。
+
+你会看到：
+- 文本 -&gt; 分词 -&gt; 向量
+- 向量 -&gt; 类别概率
+- 概率 -&gt; loss -&gt; 参数更新
+</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 学习目标
+
+- 理解 `tokenize / featurize / softmax / loss` 的角色。
+- 能解释“为什么平均 loss 会下降”。
+- 能通过改训练样本影响预测结果。
+</pre></section><section class="cell"><div class="badge">Code</div><pre class="code">from pathlib import Path
+import subprocess, sys, re
 
 ROOT = Path.cwd()
 if not (ROOT / &#x27;projects&#x27;).exists():
@@ -102,10 +110,45 @@ if not (ROOT / &#x27;projects&#x27;).exists():
         raise RuntimeError(f&#x27;未找到项目根目录（应包含 projects/ 目录），当前目录: {Path.cwd()}&#x27;)
 
 print(&#x27;使用项目目录:&#x27;, ROOT)
-subprocess.run([sys.executable, &#x27;projects/project-01-sft/train.py&#x27;], check=True, cwd=ROOT)
-</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 动手改参数
-你可以先改 `projects/project-01-sft/config.yaml` 的 `learning_rate`，
-再重新运行本 Notebook。</pre></section>
+
+def run_py(rel_path: str) -&gt; str:
+    # 执行项目脚本并返回标准输出文本
+    result = subprocess.run(
+        [sys.executable, str(ROOT / rel_path)],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    print(result.stdout)
+    return result.stdout
+</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 第一步：运行 SFT 脚本
+</pre></section><section class="cell"><div class="badge">Code</div><pre class="code">out = run_py(&#x27;projects/project-01-sft/train.py&#x27;)
+</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 第二步：抓取关键指标
+</pre></section><section class="cell"><div class="badge">Code</div><pre class="code">loss_values = [float(x) for x in re.findall(r&#x27;平均loss=([0-9.]+)&#x27;, out)]
+print(&#x27;loss 序列:&#x27;, loss_values)
+print(&#x27;是否整体下降:&#x27;, loss_values[-1] &lt; loss_values[0])
+
+pred_lines = [line for line in out.splitlines() if line.strip().startswith(&#x27;-&gt; 类别=&#x27;)]
+print(&#x27;\n预测摘要:&#x27;)
+for line in pred_lines:
+    print(line.strip())
+</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 第三步：白话解释每个模块
+
+- `tokenize`：把句子拆词。
+- `featurize`：把词变成数字向量（词袋）。
+- `softmax`：把分数变成概率。
+- `loss`：当前预测错得多严重。
+- 参数更新：让下次同类输入更容易被分到正确类别。
+</pre></section><section class="cell markdown"><div class="badge">Markdown</div><pre>## 动手练习
+
+1. 在 `projects/project-01-sft/config.yaml` 把 `learning_rate` 改成 `0.1`。
+2. 重新运行本 Notebook 的“运行脚本”单元。
+3. 对比 loss 下降速度。
+
+进阶：
+- 在 `DATASET` 增加一条缓存类样本（标签 1），观察预测是否更稳定。
+</pre></section>
     <p class="note">说明：这是为了 GitHub Pages 展示生成的静态版本。原始可交互版本请在仓库 notebooks/ 目录中打开 .ipynb。</p>
   </main>
 </body>
